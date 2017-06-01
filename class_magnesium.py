@@ -27,6 +27,7 @@ from tqdm import tnrange, tqdm_notebook
 
 from matplotlib import colors as mcolors
 import random
+from matplotlib.backends.backend_pdf import PdfPages
 
 import re
 
@@ -34,7 +35,7 @@ import winsound
 
 
 class Magnesium(object):
-    def __init__(self, file_, model = None, fold = "rna-ion-step2/"):
+    def __init__(self, file_, model = None, fold = "rna-ion-step2/", with_groups = True):
         self.filename = file_.split('.csv')[0]
         if model is not None:
             self.model = model            
@@ -48,18 +49,29 @@ class Magnesium(object):
         self.groups = self.data_numpy[:,:1]
         self.x = self.data_numpy[:, 1:-1]
         self.xt = None
-        self.y = np.array(self.data_numpy[:,-1].flatten().tolist()[0])        
+        self.y = np.array(self.data_numpy[:,-1].flatten().tolist()[0])   
+        self.y_pred = None
+        self.y_prob = []
+        self.indexes = []
+        self.with_groups = with_groups
         
         self.important_features = None
         self.train_score = []
         self.test_score= []
         self.test_roc_auc_score = []
         self.gridsearched_model = None
+        self.tresholds = []
+        self.prec_rec_data = {'precision':[], 'recall':[]}
        
     def choose_features(self, save_to_file = True, plot = True):
         classifier = self.model
-        gss = GroupShuffleSplit(n_splits = 3, test_size = 0.3, random_state = 0)
-        for train_index, test_index in gss.split(self.x, self.y, groups = self.groups):        
+        if self.with_groups:
+            gss = GroupShuffleSplit(n_splits = 3, test_size = 0.3, random_state = 0)
+            splitted = gss.split(self.x, self.y, groups = self.groups)
+        else:
+            gss = StratifiedShuffleSplit(n_splits = 3, test_size = 0.3, random_state = 0)
+            splitted = gss.split(self.x, self.y)
+        for train_index, test_index in splitted:        
             x_train = self.x[train_index]
             y_train = self.y[train_index]
             classifier.fit(x_train, y_train)
@@ -85,7 +97,8 @@ class Magnesium(object):
             bord = ax.axvline(self.xt.shape[1], color='black', linestyle='--', alpha = 0.5)
             ax.set_xticks(list(plt.xticks()[0]) + [self.xt.shape[1]])
             ax.set_xlim([0, x_train.shape[1]])
-            ax.set_ylim([0, importances[indices][0] + int(np.amax(std)/2)])
+            y_ticks = plt.yticks()[0]
+            ax.set_ylim([0,max(y_ticks[:-1])])
             line = matplotlib.lines.Line2D([0,1], [1,1], color = "black")
             ax.legend([block, line, bord], ["importance","std", "edge"], fontsize = 12)
             plt.show()
@@ -107,13 +120,20 @@ class Magnesium(object):
         else:
             x = self.x
         y = self.y
-        gss = GroupShuffleSplit(n_splits = n_splits, test_size = test_size, random_state = 0) 
+        if self.with_groups:
+            gss = GroupShuffleSplit(n_splits = n_splits, test_size = 0.3, random_state = 0)
+            splitted = gss.split(self.x, self.y, groups = self.groups)
+        else:
+            gss = StratifiedShuffleSplit(n_splits = n_splits, test_size = 0.3, random_state = 0)
+            splitted = gss.split(self.x, self.y) 
         if plots:
             ax = plt.figure(figsize = (10, 12)).add_subplot(311)
             learn = []
             learn_labels = []
     
-        for train_index, test_index in tqdm_notebook(gss.split(x, y, groups = self.groups), desc = "Splits"):    
+        i = 0
+        pdf_pages = PdfPages('outputs/Misclassified/precision_recalls_%s.pdf' % (self.filename))
+        for train_index, test_index in tqdm_notebook(splitted, desc = "Splits"):    
             x_train = x[train_index]
             y_train = y[train_index]
             x_test = x[test_index]
@@ -125,11 +145,19 @@ class Magnesium(object):
             self.train_score.append(self.trained_model.score(x_train, y_train))
             self.test_score.append(self.trained_model.score(x_test, y_test))
             self.test_roc_auc_score.append(roc_auc_score(y_test, y_prob))
-
+            
+            self.y_prob.append(y_prob)
+            self.indexes.append(test_index)
+            
+            i = i + 1
+            self.prec_recall_pdf(y_test, y_prob, i, pdf_pages)
+            
             if plots:
                 fpr, tpr, _ = roc_curve(y_test, y_prob)
                 learn = (ax.plot(fpr, tpr, color = "red", alpha=0.5, label = ''))
+        self.y_data = [y_prob, test_index]
         
+        pdf_pages.close()
         if plots:
             final = ax.plot(fpr, tpr, color = "black", label = 'final curve')
             labels, inds = np.unique(learn_labels, return_index = True)
@@ -144,27 +172,46 @@ class Magnesium(object):
 
             self.prec_recall(y_test, y_prob)
             plt.show()
-        return self.test_score[-1]
+        print('Average score:', np.mean(self.test_score))
+        return np.mean(self.test_score)
             
     def prec_recall(self,y_test, y_prob):
-        precision = {}
-        recall = {}
-        precision["micro"], recall["micro"], _ = precision_recall_curve(y_test,  y_prob)
-        acc = average_precision_score(y_test, y_prob, average="micro")
+        precision, recall, treshold = precision_recall_curve(y_test,  y_prob)
         ax = plt.figure(figsize=(10, 12)).add_subplot(313)
-        ax.plot(recall["micro"], precision["micro"], color="green", lw=2, label=self.model_name + ' (area = {0:0.2f})'
+        acc = average_precision_score(y_test, y_prob, average="micro")
+        ax.scatter(recall, precision, color="teal")
+        ax.plot(recall, precision, color="teal", lw=1, label=self.model_name + ' (area = {0:0.2f})'
                        ''.format(acc))
         ax.legend(fontsize = 12)
         ax.set_xlabel('Recall')
         ax.set_ylabel('Precision')
         ax.set_title("Presicion-recall")
         
+    def prec_recall_pdf(self, y_test, y_prob, i, filename):
+        precision, recall, treshold = precision_recall_curve(y_test,  y_prob)
+        self.prec_rec_data['precision'].append(precision)
+        self.prec_rec_data['recall'].append(recall)
+        self.tresholds.append(treshold)
+        
+        plt.figure(figsize=(10, 5))
+        acc = average_precision_score(y_test, y_prob, average="micro")
+        plt.scatter(recall, precision, color="teal")
+        plt.plot(recall, precision, color="teal", lw=1, label=self.model_name + ' (area = {0:0.2f})'
+                       ''.format(acc))   
+        plt.axvline(0.001, color='black', linestyle='--', alpha = 0.5)
+        plt.xlabel('Recall')
+        plt.ylabel('Precision')
+        plt.legend(fontsize = 12)
+        plt.title('Iteration %d' % i)
+        filename.savefig()  # saves the current figure into a pdf page
+        plt.close()
+        
     def compute(self, n_splits = 3, test_size = 0.3, plots = True, reduce_features = True,
                 save_to_file = True, gridsearched = False):
         if reduce_features:
             self.choose_features(save_to_file, plots)        
         self.fit_predict(n_splits, test_size, plots, reduce_features, gridsearched)
-        return self.test_score[-1]
+        return np.mean(self.test_score)
     
     def gridsearch(self, parametres):
         cv = GroupShuffleSplit(n_splits = 3, test_size = 0.7, random_state = 0)
