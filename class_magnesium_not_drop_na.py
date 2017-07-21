@@ -34,6 +34,8 @@ import random
 import itertools
 from sklearn.utils.multiclass import check_classification_targets
 
+from imblearn.under_sampling import RandomUnderSampler
+
 #import winsound
 
 colour = ['#fc977c', '#929292']
@@ -174,9 +176,8 @@ class Magnesium(object):
             
             i = i + 1
 #            self.prec_recall_pdf(y_test, y_prob, i, pdf_pages)
-            
+            fpr, tpr, _ = roc_curve(y_test, y_prob)
             if plots:
-                fpr, tpr, _ = roc_curve(y_test, y_prob)
                 learn = (ax.plot(fpr, tpr, color = self.colours[1], alpha=0.5, label = ''))
         self.y_data = [y_prob, test_index]
         print('Number of sites: ', np.sum(y_test == 1))
@@ -196,22 +197,41 @@ class Magnesium(object):
           #  ax.legend()
           #  ax.set_title(self.model_name + ' . Accuracy scores', fontsize = 12)
 
-            pr = self.prec_recall(y_test, y_prob)
-            self.plot_confusion_matrix(y_test, y_pred)
-            plt.show()        
-        return {'score': np.mean(self.test_score), 'roc_auc':[fpr, tpr], 'prec_rec':pr}
+        pr = self.prec_recall(y_test, y_prob, plots) 
+        if plots:
+            self.plot_confusion_matrix(y_test, y_pred)   
+        return {'test score': np.mean(self.test_score), 'train score':np.mean(self.train_score), 'roc_auc':[fpr, tpr], 'prec_rec':pr}
             
-    def prec_recall(self,y_test, y_prob):
+    def predict(self, file_):
+        data = np.matrix(pd.read_table(fold+file_).fillna(method = 'backfill', axis = 1))    
+        groups = data[:,:1]
+        x = self.data_numpy[:, 1:-1]
+        y = np.array(self.data[:,-1].flatten().tolist()[0])           
+        y_pred = self.trained_model.predict(x)
+        y_prob = self.trained_model.predict_proba(x)[:, 1]
+        test_score = self.trained_model.score(x, y)
+        test_roc_auc_score = roc_auc_score(y, y_prob)
+        fpr, tpr, _ = roc_curve(y_test, y_prob)
+        
+        ax = plt.figure(figsize = (10, 12)).add_subplot(211)
+        ax.plot(fpr, tpr, color = self.colours[1], alpha=0.5, label = '')   
+        pr = self.prec_recall(y_test, y_prob, plots) 
+        self.plot_confusion_matrix(y_test, y_pred)
+  
+        
+    def prec_recall(self,y_test, y_prob, plots):
         precision, recall, treshold = precision_recall_curve(y_test,  y_prob)
-        ax = plt.figure(figsize=(10, 12)).add_subplot(212)
         acc = average_precision_score(y_test, y_prob, average="micro")
-        ax.scatter(recall, precision, color = self.colours[0])
-        ax.plot(recall, precision, color = self.colours[0], lw=1, label=self.model_name + ' (area = {0:0.2f})'
-                       ''.format(acc))
-        ax.legend(fontsize = 12)
-        ax.set_xlabel('Recall')
-        ax.set_ylabel('Precision')
-        ax.set_title("Presicion-recall")
+        if plots:
+            ax = plt.figure(figsize=(10, 12)).add_subplot(212)            
+            ax.scatter(recall, precision, color = self.colours[0])
+            ax.plot(recall, precision, color = self.colours[0], lw=1, label=self.model_name + ' (area = {0:0.2f})'
+                           ''.format(acc))
+            ax.legend(fontsize = 12)
+            ax.set_xlabel('Recall')
+            ax.set_ylabel('Precision')
+            ax.set_title("Presicion-recall")
+            plt.show()
         return [precision, recall, acc]
     
     
@@ -282,11 +302,21 @@ class Magnesium(object):
         plt.close()
         
     def compute(self, n_splits = 3, test_size = 0.3, plots = True, reduce_features = True,
-                save_to_file = True, gridsearched = False):
+                save_to_file = False, gridsearched = False, balanced = False):
         if reduce_features:
-            self.choose_features(save_to_file)        
-        res = self.fit_predict(n_splits, test_size, plots, reduce_features, gridsearched)
-        return res
+            self.choose_features(save_to_file)     
+      
+        if balanced:
+            rus = RandomUnderSampler(random_state=42)
+            x, y = rus.fit_sample(self.x, self.y)
+#            y = np.ravel(np.asarray(y, dtype="int"))
+            print(y.shape)
+            print(self.y.shape)
+  #          y = np.array(y.flatten().tolist()[0])   
+            print('Before: ', self.x.shape)
+            print('After: ', x.shape)
+            return self.fit_predict(n_splits, test_size, plots, reduce_features, gridsearched, x = x, y = y)
+        return self.fit_predict(n_splits, test_size, plots, reduce_features, gridsearched)
     
     def gridsearch(self, parametres):
         cv = GroupShuffleSplit(n_splits = 3, test_size = 0.7, random_state = 0)
