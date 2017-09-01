@@ -57,7 +57,9 @@ class Magnesium(object):
         self.n_features = n_features
         self.model_name = str(self.model).split('(')[0]
         self.trained_model = None
-        self.data = pd.read_table(fold+file_).fillna(method = 'backfill', axis = 1)        
+        self.data = pd.read_table(fold+file_).fillna(method = 'backfill', axis = 0)  
+        if np.sum(self.data.isnull().any(axis=1)) > 0:
+            self.data.fillna(method = 'pad', axis = 0, inplace = True)  
         self.data_numpy = np.matrix(self.data)
         self.features = list(self.data.columns)[1:]
         self.groups = self.data_numpy[:,:1]
@@ -291,8 +293,9 @@ class Magnesium(object):
                                                                   x2[np.argmax(kde2(x2))], color='black', linestyle='--', alpha = 0.5))
         self.probability_density_plot.append(self.form_plot_string('plt.axvline',
                                                                    0.5, color='black', linestyle='-.', alpha = 0.7, label = '0.5')) 
-        self.probability_density_plot.append(self.form_plot_string('plt.xticks',
-                                     [0, 0.2, 0.4, 0.6, 0.8, 1]+[round(x1[np.argmax(kde1(x1))],2), round(x2[np.argmax(kde2(x2))],2)]))
+ #       self.probability_density_plot.append(self.form_plot_string('plt.xticks',
+  #                                   [0, 0.2, 0.4, 0.6, 0.8, 1]+[round(x1[np.argmax(kde1(x1))],2), round(x2[np.argmax(kde2(x2))],2)]))
+        self.probability_density_plot.append(self.form_plot_string('plt.xticks', [0, 0.2, 0.4, 0.6, 0.8, 1]))
         self.probability_density_plot.append(self.form_plot_string('plt.legend'))
         self.probability_density_plot.append(self.form_plot_string('plt.title', 'Probability Distributions'))
         self.probability_density_plot.append(self.form_plot_string('plt.xlabel', 'Probabilities'))
