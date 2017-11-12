@@ -2,5 +2,5 @@
 ## Coursework / Correlation research
 
 * [Report]("https://PollyTikhonova.github.io/coursework/correlation/Correlation. Report.slides.html")
-* [R Code]("https://PollyTikhonova.github.io/coursework/correlation/Correlations R code.html")
+* [R Code](https://PollyTikhonova.github.io/coursework/correlation/Correlations.html)
 * [Interactive heatmap]("https://PollyTikhonova.github.io/coursework/correlation/Correlations Interactive version сlassic.html")
