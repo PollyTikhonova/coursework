@@ -2,3 +2,4 @@
 ## Coursework
 
 * [GBM modelling in R](https://PollyTikhonova.github.io/coursework/GBM)
+* [Correlation research](https://PollyTikhonova.github.io/coursework/correlation)
