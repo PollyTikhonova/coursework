@@ -1,7 +1,6 @@
-# Tikhonova Polina    [![Альтернативный текст](GitHub-Mark-32px.png "Вернуться в репозиторий")](https://github.com/PollyTikhonova/bioinformatics_homeworks)
-## Bioinformatics homeworks
+# Tikhonova Polina    [![Вернуться в репозиторий](https://pollytikhonova.github.io/coursework/GitHub-Mark-32px.png "Вернуться в репозиторий")](https://github.com/PollyTikhonova/coursework/tree/master/correlation)
+## Coursework
 
-* [System biology and personalized medicine](https://PollyTikhonova.github.io/bioinformatics_homeworks/Pesonalized_medicine)
-* [Structural bioinformatics and medicine modelling](https://PollyTikhonova.github.io/bioinformatics_homeworks/Medicine_modelling)
-
-
+* [Report](https://PollyTikhonova.github.io/coursework/correlation/Correlation. Report.slides.html)
+* [R Code](https://PollyTikhonova.github.io/coursework/correlation/Correlations R code.html)
+* [Interactive heatmap](https://PollyTikhonova.github.io/coursework/correlation/Correlations Interactive version сlassic.html)
