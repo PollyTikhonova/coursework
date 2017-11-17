@@ -2,4 +2,4 @@
 ## Coursework / Validation
 
 * [View code](https://PollyTikhonova.github.io/coursework/validation/Train,Predict&Validate.html)
-* [Source code](https://PollyTikhonova.github.io/coursework/validation/Train,Predict&Validate.ipunb)
+* [Source code](https://PollyTikhonova.github.io/coursework/validation/Train,Predict&Validate.ipynb)
