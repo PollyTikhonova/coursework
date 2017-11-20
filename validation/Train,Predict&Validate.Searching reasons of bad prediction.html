@@ -11757,7 +11757,8 @@ div#notebook {
 <li>тренироваться на <span style='font-weight:bold;color:#2323b1'>наших выборках</span> , а предсказывать на <span style='font-weight:bold;color:green'>валидационной</span> , то получим <span style='font-weight:bold;'>плохой результат;</span></li>
 <li>тренироваться на <span style='font-weight:bold;color:green'>валидационной выборке</span> и предсказывать на  <span style='font-weight:bold;color:green'>ней же</span>, то получим <span style='font-weight:bold;color:red'>хороший результат. </span> </li>
 </ul>
-<p>То есть нужно искать разницу в построенных моделях.</p>
+<p>То есть нужно искать разницу в построенных моделях.<br>
+P.s. больше всего модели разняться на колонке <i>"proteins".</i></p>
 
 </div>
 </div>
@@ -11774,7 +11775,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
@@ -13300,6 +13301,26 @@ RETUoZi0ExEREREREXWo/x9wlXZ++x6uEAAAAABJRU5ErkJggg==
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">trained_model_validation</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">m</span><span class="o">.</span><span class="n">feature_inds</span> <span class="o">=</span> <span class="n">indices</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/Ranked features.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">]],</span> <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">]]))</span>
+</pre></div>
+
+</div>
 </div>
 </div>
 
@@ -16342,6 +16363,591 @@ EZERoIAuIiIiIiIiMgL+H4LoSck01ijKAAAAAElFTkSuQmCC
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">m_train</span><span class="o">.</span><span class="n">trained_model</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">m_train</span><span class="o">.</span><span class="n">feature_inds</span> <span class="o">=</span> <span class="n">indices</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/Ranked features on validation set.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_train</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">m_train</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">]],</span> <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">]]))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Compare-feature-importances">Compare feature importances<a class="anchor-link" href="#Compare-feature-importances">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">imps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">&#39;outputs/Ranked features.txt&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  
+<span class="n">imps_validation</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">&#39;outputs/Ranked features on validation set.txt&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">imps_validation</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">imps</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imps</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imps_validation</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_imps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;features&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imps</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> 
+                             <span class="s1">&#39;usual&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imps</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> 
+                             <span class="s1">&#39;validation&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imps_validation</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                            <span class="s1">&#39;difference&#39;</span><span class="p">:</span><span class="n">dif</span><span class="p">},</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="s1">&#39;usual&#39;</span><span class="p">,</span> <span class="s1">&#39;validation&#39;</span><span class="p">,</span> <span class="s1">&#39;difference&#39;</span><span class="p">])</span>
+<span class="n">feature_imps</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;difference&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Portion of proteins in dataset - </span><span class="si">%.2f</span><span class="s1">.</span><span class="se">\n</span><span class="s1">Portion of proteins in validation dataset - </span><span class="si">%.2f</span><span class="s1">.&#39;</span><span class="o">%</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.13</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Portion of proteins in dataset - 0.60.
+Portion of proteins in validation dataset - 0.13.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_imps</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[65]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>features</th>
+      <th>usual</th>
+      <th>validation</th>
+      <th>difference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>267</th>
+      <td>protein</td>
+      <td>0.000976</td>
+      <td>0.011666</td>
+      <td>0.010690</td>
+    </tr>
+    <tr>
+      <th>268</th>
+      <td>resol</td>
+      <td>0.010480</td>
+      <td>0.015043</td>
+      <td>0.004563</td>
+    </tr>
+    <tr>
+      <th>254</th>
+      <td>moietyB</td>
+      <td>0.012717</td>
+      <td>0.017196</td>
+      <td>0.004479</td>
+    </tr>
+    <tr>
+      <th>255</th>
+      <td>moietyP</td>
+      <td>0.012220</td>
+      <td>0.016325</td>
+      <td>0.004105</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>atomN</td>
+      <td>0.009482</td>
+      <td>0.013139</td>
+      <td>0.003657</td>
+    </tr>
+    <tr>
+      <th>158</th>
+      <td>atomO</td>
+      <td>0.009430</td>
+      <td>0.012697</td>
+      <td>0.003267</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>delta1</td>
+      <td>0.005827</td>
+      <td>0.008603</td>
+      <td>0.002776</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>delta</td>
+      <td>0.006071</td>
+      <td>0.008547</td>
+      <td>0.002476</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>delta2</td>
+      <td>0.005929</td>
+      <td>0.008383</td>
+      <td>0.002454</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>atomO2p</td>
+      <td>0.005369</td>
+      <td>0.007503</td>
+      <td>0.002134</td>
+    </tr>
+    <tr>
+      <th>377</th>
+      <td>xray</td>
+      <td>0.001893</td>
+      <td>0.000000</td>
+      <td>0.001893</td>
+    </tr>
+    <tr>
+      <th>242</th>
+      <td>etapp1</td>
+      <td>0.007727</td>
+      <td>0.006038</td>
+      <td>0.001689</td>
+    </tr>
+    <tr>
+      <th>339</th>
+      <td>thetapm2</td>
+      <td>0.007300</td>
+      <td>0.005686</td>
+      <td>0.001614</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>deltam1</td>
+      <td>0.005871</td>
+      <td>0.007461</td>
+      <td>0.001590</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>gamma2</td>
+      <td>0.006730</td>
+      <td>0.005161</td>
+      <td>0.001569</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>atomN3</td>
+      <td>0.007279</td>
+      <td>0.008838</td>
+      <td>0.001559</td>
+    </tr>
+    <tr>
+      <th>338</th>
+      <td>thetapm1</td>
+      <td>0.009060</td>
+      <td>0.007545</td>
+      <td>0.001515</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>theta</td>
+      <td>0.006815</td>
+      <td>0.008252</td>
+      <td>0.001437</td>
+    </tr>
+    <tr>
+      <th>246</th>
+      <td>gamma</td>
+      <td>0.007486</td>
+      <td>0.006082</td>
+      <td>0.001404</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>beta1</td>
+      <td>0.006867</td>
+      <td>0.005482</td>
+      <td>0.001385</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td>gamma1</td>
+      <td>0.007460</td>
+      <td>0.006104</td>
+      <td>0.001356</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <td>etappm2</td>
+      <td>0.007248</td>
+      <td>0.005893</td>
+      <td>0.001355</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>etapp</td>
+      <td>0.006871</td>
+      <td>0.005543</td>
+      <td>0.001328</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>atomO3p</td>
+      <td>0.007849</td>
+      <td>0.009175</td>
+      <td>0.001326</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>e-zm1</td>
+      <td>0.006097</td>
+      <td>0.004827</td>
+      <td>0.001270</td>
+    </tr>
+    <tr>
+      <th>256</th>
+      <td>moietyR</td>
+      <td>0.009929</td>
+      <td>0.011189</td>
+      <td>0.001260</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td>epsilon2</td>
+      <td>0.006563</td>
+      <td>0.005330</td>
+      <td>0.001233</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>atomO2</td>
+      <td>0.004155</td>
+      <td>0.005339</td>
+      <td>0.001184</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>thetam1</td>
+      <td>0.007787</td>
+      <td>0.006644</td>
+      <td>0.001143</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>eta1</td>
+      <td>0.006611</td>
+      <td>0.005501</td>
+      <td>0.001110</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>atomOP1</td>
+      <td>0.006588</td>
+      <td>0.007190</td>
+      <td>0.000602</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>chi2</td>
+      <td>0.006169</td>
+      <td>0.005575</td>
+      <td>0.000594</td>
+    </tr>
+    <tr>
+      <th>379</th>
+      <td>zeta1</td>
+      <td>0.006201</td>
+      <td>0.005609</td>
+      <td>0.000592</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>epsilonm2</td>
+      <td>0.006269</td>
+      <td>0.005683</td>
+      <td>0.000586</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>chi</td>
+      <td>0.006276</td>
+      <td>0.005701</td>
+      <td>0.000575</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>betam2</td>
+      <td>0.006663</td>
+      <td>0.006105</td>
+      <td>0.000558</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>alpham1</td>
+      <td>0.006577</td>
+      <td>0.006027</td>
+      <td>0.000550</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>atomN2</td>
+      <td>0.003949</td>
+      <td>0.004485</td>
+      <td>0.000536</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>cWW1</td>
+      <td>0.000750</td>
+      <td>0.001282</td>
+      <td>0.000532</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td>atomO6</td>
+      <td>0.004313</td>
+      <td>0.003784</td>
+      <td>0.000529</td>
+    </tr>
+    <tr>
+      <th>373</th>
+      <td>v4m1</td>
+      <td>0.005710</td>
+      <td>0.005186</td>
+      <td>0.000524</td>
+    </tr>
+    <tr>
+      <th>354</th>
+      <td>v0m2</td>
+      <td>0.005781</td>
+      <td>0.005258</td>
+      <td>0.000523</td>
+    </tr>
+    <tr>
+      <th>280</th>
+      <td>seqG1</td>
+      <td>0.001289</td>
+      <td>0.000775</td>
+      <td>0.000514</td>
+    </tr>
+    <tr>
+      <th>365</th>
+      <td>v3</td>
+      <td>0.005628</td>
+      <td>0.005114</td>
+      <td>0.000514</td>
+    </tr>
+    <tr>
+      <th>258</th>
+      <td>p1</td>
+      <td>0.005682</td>
+      <td>0.005169</td>
+      <td>0.000513</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>atomN4</td>
+      <td>0.003535</td>
+      <td>0.003029</td>
+      <td>0.000506</td>
+    </tr>
+    <tr>
+      <th>382</th>
+      <td>zetam2</td>
+      <td>0.006352</td>
+      <td>0.005878</td>
+      <td>0.000474</td>
+    </tr>
+    <tr>
+      <th>358</th>
+      <td>v1m1</td>
+      <td>0.005685</td>
+      <td>0.005216</td>
+      <td>0.000469</td>
+    </tr>
+    <tr>
+      <th>296</th>
+      <td>sszp2</td>
+      <td>0.005941</td>
+      <td>0.005474</td>
+      <td>0.000467</td>
+    </tr>
+    <tr>
+      <th>357</th>
+      <td>v12</td>
+      <td>0.005431</td>
+      <td>0.005886</td>
+      <td>0.000455</td>
+    </tr>
+    <tr>
+      <th>293</th>
+      <td>splaym2</td>
+      <td>0.006700</td>
+      <td>0.006247</td>
+      <td>0.000453</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>betam1</td>
+      <td>0.006658</td>
+      <td>0.006211</td>
+      <td>0.000447</td>
+    </tr>
+    <tr>
+      <th>257</th>
+      <td>p</td>
+      <td>0.005690</td>
+      <td>0.005244</td>
+      <td>0.000446</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>eta2</td>
+      <td>0.006326</td>
+      <td>0.005899</td>
+      <td>0.000427</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>cWW2</td>
+      <td>0.000844</td>
+      <td>0.001270</td>
+      <td>0.000426</td>
+    </tr>
+    <tr>
+      <th>263</th>
+      <td>phase-anglem1</td>
+      <td>0.005633</td>
+      <td>0.005224</td>
+      <td>0.000409</td>
+    </tr>
+    <tr>
+      <th>244</th>
+      <td>etappm1</td>
+      <td>0.006668</td>
+      <td>0.006271</td>
+      <td>0.000397</td>
+    </tr>
+    <tr>
+      <th>362</th>
+      <td>v22</td>
+      <td>0.005640</td>
+      <td>0.006031</td>
+      <td>0.000391</td>
+    </tr>
+    <tr>
+      <th>252</th>
+      <td>internal</td>
+      <td>0.000556</td>
+      <td>0.000927</td>
+      <td>0.000371</td>
+    </tr>
+    <tr>
+      <th>295</th>
+      <td>sszp1</td>
+      <td>0.005885</td>
+      <td>0.005519</td>
+      <td>0.000366</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 4 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -17797,7 +18403,7 @@ ikU7ERERERERUZP6/wGC0WvtA8pzNAAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Predict-on-test-split-of-trainig-data">Predict on test split of trainig data<a class="anchor-link" href="#Predict-on-test-split-of-trainig-data">&#182;</a></h4>
+<h4 id="Predict-on-test-split-of-training-data">Predict on test split of training data<a class="anchor-link" href="#Predict-on-test-split-of-training-data">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -19370,419 +19976,6 @@ DAAFdBEREREREZEB8P8BWqxxWqQIUykAAAAASUVORK5CYII=
 >
 </div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">trained_model</span>
-<span class="n">importances</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">feature_importances_</span>
-<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">feature_inds</span> <span class="o">=</span> <span class="n">indices</span>
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">. </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%f</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">]],</span> <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">f</span><span class="p">]]))</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_inds</span><span class="p">))];</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1. moietyB (0.013729)
-2. moietyP (0.013294)
-3. atomO (0.010471)
-4. chainlen (0.010435)
-5. atomN (0.010225)
-6. moietyR (0.010207)
-7. thetapm1 (0.008838)
-8. thetap1 (0.008705)
-9. thetap (0.008463)
-10. atomO3p (0.008405)
-11. thetapp (0.007849)
-12. thetappm1 (0.007813)
-13. gamma (0.007664)
-14. atomOP2 (0.007618)
-15. etapp1 (0.007598)
-16. resol (0.007593)
-17. thetam1 (0.007543)
-18. atomN3 (0.007438)
-19. theta (0.007383)
-20. splay (0.007354)
-21. thetapp1 (0.007201)
-22. thetap2 (0.007182)
-23. etapp (0.007160)
-24. gamma1 (0.007113)
-25. alpham1 (0.007086)
-26. theta1 (0.007084)
-27. thetapp2 (0.007078)
-28. gammam1 (0.007051)
-29. beta (0.007008)
-30. thetapm2 (0.006992)
-31. splaym1 (0.006988)
-32. betam1 (0.006825)
-33. etappm2 (0.006805)
-34. etappm1 (0.006793)
-35. splaym2 (0.006755)
-36. splay2 (0.006752)
-37. zetam1 (0.006751)
-38. beta1 (0.006723)
-39. zeta1 (0.006717)
-40. alpha2 (0.006705)
-41. splay1 (0.006677)
-42. alpha (0.006677)
-43. gamma2 (0.006674)
-44. thetappm2 (0.006659)
-45. gammam2 (0.006650)
-46. eta1 (0.006650)
-47. etapp2 (0.006619)
-48. etam2 (0.006614)
-49. theta2 (0.006573)
-50. etap1 (0.006559)
-51. zeta (0.006539)
-52. atomOP1 (0.006502)
-53. epsilon2 (0.006500)
-54. thetam2 (0.006498)
-55. zeta2 (0.006494)
-56. atomN1 (0.006491)
-57. beta2 (0.006480)
-58. etap (0.006456)
-59. etapm2 (0.006426)
-60. zetam2 (0.006411)
-61. epsilon (0.006405)
-62. deltam1 (0.006400)
-63. eta2 (0.006390)
-64. alpham2 (0.006383)
-65. delta (0.006367)
-66. epsilonm2 (0.006339)
-67. deltam2 (0.006316)
-68. eta (0.006307)
-69. betam2 (0.006306)
-70. alpha1 (0.006297)
-71. chi (0.006290)
-72. epsilonm1 (0.006276)
-73. etap2 (0.006257)
-74. delta1 (0.006238)
-75. chim1 (0.006210)
-76. atomO2p (0.006197)
-77. chim2 (0.006180)
-78. epsilon1 (0.006175)
-79. etam1 (0.006166)
-80. chi1 (0.006156)
-81. tm1 (0.006123)
-82. etapm1 (0.006077)
-83. sszp (0.006062)
-84. e-z (0.006003)
-85. e-zm1 (0.005979)
-86. sszpm1 (0.005952)
-87. tm2 (0.005939)
-88. delta2 (0.005930)
-89. e-zm2 (0.005914)
-90. chi2 (0.005895)
-91. tm (0.005871)
-92. v4m1 (0.005825)
-93. e-z1 (0.005810)
-94. sszp1 (0.005797)
-95. sszp2 (0.005779)
-96. sszpm2 (0.005776)
-97. v42 (0.005754)
-98. v1m2 (0.005752)
-99. v2 (0.005750)
-100. v0m2 (0.005744)
-101. v4 (0.005740)
-102. v32 (0.005729)
-103. phase-anglem2 (0.005719)
-104. v3m1 (0.005687)
-105. tmm1 (0.005672)
-106. tmm2 (0.005626)
-107. v4m2 (0.005623)
-108. e-z2 (0.005616)
-109. v41 (0.005612)
-110. p1 (0.005593)
-111. v1 (0.005592)
-112. v3 (0.005586)
-113. v0 (0.005580)
-114. p (0.005565)
-115. v31 (0.005561)
-116. v1m1 (0.005556)
-117. phase-angle2 (0.005549)
-118. phase-angle (0.005511)
-119. v0m1 (0.005510)
-120. dp2 (0.005508)
-121. v01 (0.005506)
-122. v2m2 (0.005498)
-123. v3m2 (0.005493)
-124. v2m1 (0.005491)
-125. v02 (0.005480)
-126. v12 (0.005462)
-127. atomO5p (0.005458)
-128. p2 (0.005455)
-129. phase-angle1 (0.005450)
-130. v22 (0.005442)
-131. v21 (0.005426)
-132. dpm2 (0.005424)
-133. pm1 (0.005409)
-134. pm2 (0.005371)
-135. v11 (0.005282)
-136. dpm1 (0.005271)
-137. phase-anglem1 (0.005256)
-138. dp1 (0.005198)
-139. dp (0.005067)
-140. atomN7 (0.004677)
-141. wtlen (0.004634)
-142. xray (0.004625)
-143. atomO6 (0.004328)
-144. atomO4p (0.004154)
-145. atomN4 (0.003950)
-146. atomN2 (0.003939)
-147. atomN9 (0.003843)
-148. atomO2 (0.003811)
-149. atomO4 (0.002501)
-150. atomN6 (0.002471)
-151. wtnum (0.002073)
-152. seqG (0.001579)
-153. seqC1 (0.001549)
-154. seqG1 (0.001304)
-155. seqC (0.001073)
-156. hairpin (0.000900)
-157. seqC2 (0.000860)
-158. protein (0.000860)
-159. cWWm2 (0.000847)
-160. cWW2 (0.000832)
-161. cWW1 (0.000819)
-162. seqA1 (0.000815)
-163. seqGm1 (0.000808)
-164. seqCm1 (0.000800)
-165. SXIXm1 (0.000757)
-166. cWW (0.000749)
-167. seqGm2 (0.000739)
-168. SXIXm2 (0.000727)
-169. seqUm1 (0.000723)
-170. seqCm2 (0.000723)
-171. SXIX (0.000723)
-172. cWWm1 (0.000719)
-173. seqU1 (0.000697)
-174. seqAm2 (0.000695)
-175. seqA2 (0.000693)
-176. seqAm1 (0.000691)
-177. seqG2 (0.000690)
-178. SXIX1 (0.000686)
-179. stem (0.000677)
-180. seqU2 (0.000677)
-181. seqU (0.000668)
-182. SXIX2 (0.000664)
-183. seqUm2 (0.000664)
-184. SXXm2 (0.000663)
-185. SXX1 (0.000653)
-186. seqA (0.000651)
-187. SXXm1 (0.000606)
-188. SXX (0.000578)
-189. SXX2 (0.000567)
-190. internal (0.000544)
-191. junction (0.000532)
-192. SXXIV2 (0.000453)
-193. tWH2 (0.000426)
-194. SXI (0.000371)
-195. SXXVIII (0.000365)
-196. SXXIVm1 (0.000357)
-197. SXXVIII1 (0.000351)
-198. SXXVIIIm1 (0.000349)
-199. SXXVIII2 (0.000343)
-200. tWHm1 (0.000340)
-201. SXI2 (0.000339)
-202. SXXVIIIm2 (0.000333)
-203. SXIm2 (0.000323)
-204. tWH1 (0.000306)
-205. tWHm2 (0.000305)
-206. tWH (0.000302)
-207. SXIm1 (0.000298)
-208. SXXIV1 (0.000298)
-209. SXI1 (0.000289)
-210. tHS2 (0.000234)
-211. cWHm2 (0.000230)
-212. SXXIV (0.000227)
-213. tHSm1 (0.000218)
-214. tHSm2 (0.000209)
-215. cWS (0.000204)
-216. cWHm1 (0.000203)
-217. tHS1 (0.000202)
-218. SXXIVm2 (0.000201)
-219. tSSm2 (0.000195)
-220. cSSm2 (0.000194)
-221. bulge (0.000192)
-222. tSS (0.000191)
-223. cWSm1 (0.000189)
-224. tHS (0.000185)
-225. cWS1 (0.000179)
-226. tSS2 (0.000177)
-227. tWW2 (0.000173)
-228. cWH (0.000172)
-229. tWW1 (0.000172)
-230. tSSm1 (0.000166)
-231. tWWm1 (0.000162)
-232. cWSm2 (0.000160)
-233. cSSm1 (0.000158)
-234. cSS2 (0.000157)
-235. cWH2 (0.000154)
-236. tWS1 (0.000152)
-237. cSS (0.000151)
-238. tSS1 (0.000144)
-239. cSS1 (0.000140)
-240. tWWm2 (0.000137)
-241. SXVIm2 (0.000137)
-242. tWW (0.000133)
-243. cWH1 (0.000132)
-244. tWS2 (0.000124)
-245. tHHm2 (0.000123)
-246. tWS (0.000123)
-247. cWS2 (0.000121)
-248. tHH (0.000119)
-249. SVIII1 (0.000116)
-250. tWSm1 (0.000115)
-251. tHH2 (0.000112)
-252. SXXIIIm1 (0.000112)
-253. SVIII (0.000105)
-254. tWSm2 (0.000105)
-255. SXVI1 (0.000103)
-256. tHH1 (0.000102)
-257. SXVI2 (0.000099)
-258. SX1 (0.000088)
-259. SVIIIm1 (0.000088)
-260. SVIIIm2 (0.000087)
-261. SXVIm1 (0.000086)
-262. SX2 (0.000082)
-263. tHHm1 (0.000080)
-264. SVIII2 (0.000078)
-265. SXm2 (0.000071)
-266. SII (0.000068)
-267. SVm2 (0.000068)
-268. SXXII2 (0.000066)
-269. SXXIIIm2 (0.000064)
-270. SXXIII2 (0.000064)
-271. SXXIII1 (0.000063)
-272. cHSm2 (0.000061)
-273. SII2 (0.000061)
-274. SXVI (0.000059)
-275. SX (0.000059)
-276. SXXIXm1 (0.000059)
-277. SXm1 (0.000059)
-278. cHSm1 (0.000051)
-279. SV1 (0.000051)
-280. SXXIm2 (0.000051)
-281. SXVIIIm1 (0.000050)
-282. SXXVm2 (0.000047)
-283. SIIm2 (0.000045)
-284. SXXIX (0.000043)
-285. SVIIm2 (0.000043)
-286. SXXIX1 (0.000042)
-287. SXVIIIm2 (0.000041)
-288. cHS1 (0.000041)
-289. SVII2 (0.000041)
-290. SXXIII (0.000040)
-291. SIIm1 (0.000039)
-292. SVm1 (0.000039)
-293. cHHm1 (0.000039)
-294. SV2 (0.000039)
-295. SXXIm1 (0.000039)
-296. SII1 (0.000038)
-297. SXXI2 (0.000036)
-298. SVI (0.000036)
-299. SVII (0.000036)
-300. cHS (0.000035)
-301. SXXI (0.000034)
-302. SVIm2 (0.000034)
-303. SXXIXm2 (0.000033)
-304. cHHm2 (0.000032)
-305. SV (0.000032)
-306. SXXII1 (0.000032)
-307. SXXIIm1 (0.000031)
-308. SXXV2 (0.000030)
-309. SXXIX2 (0.000030)
-310. SXXVm1 (0.000030)
-311. cHH1 (0.000029)
-312. SIX2 (0.000029)
-313. SVIIm1 (0.000029)
-314. SXXII (0.000028)
-315. SXXV1 (0.000027)
-316. SVII1 (0.000027)
-317. SVI2 (0.000027)
-318. SXXI1 (0.000026)
-319. SXVIII1 (0.000026)
-320. SXVIII2 (0.000025)
-321. SVIm1 (0.000024)
-322. SXXVII2 (0.000024)
-323. SI (0.000023)
-324. cHH (0.000023)
-325. SXXIIm2 (0.000023)
-326. SIX (0.000023)
-327. SXVIII (0.000022)
-328. cHH2 (0.000022)
-329. SVI1 (0.000020)
-330. SXXV (0.000020)
-331. SI1 (0.000019)
-332. SIm2 (0.000019)
-333. SIV1 (0.000019)
-334. atomOP3 (0.000017)
-335. SIV2 (0.000016)
-336. SIV (0.000016)
-337. SIXm2 (0.000015)
-338. cHS2 (0.000014)
-339. SIVm1 (0.000013)
-340. SXIII1 (0.000013)
-341. SIVm2 (0.000013)
-342. SI2 (0.000013)
-343. SIm1 (0.000012)
-344. SXXVII1 (0.000011)
-345. SXV (0.000009)
-346. SXXVI1 (0.000009)
-347. SXIIm2 (0.000009)
-348. SXV1 (0.000008)
-349. SIXm1 (0.000008)
-350. SIX1 (0.000008)
-351. SXVm1 (0.000008)
-352. SXIII2 (0.000008)
-353. SXV2 (0.000008)
-354. SXII1 (0.000007)
-355. SXVm2 (0.000007)
-356. SXIIm1 (0.000007)
-357. SXIII (0.000005)
-358. SXIIIm1 (0.000005)
-359. SXXVIIm2 (0.000005)
-360. SXXVIm2 (0.000005)
-361. SXXVI (0.000005)
-362. SXXVII (0.000005)
-363. SXXVIm1 (0.000003)
-364. SXII (0.000003)
-365. SXIIIm2 (0.000002)
-366. SIII1 (0.000001)
-367. SIIIm1 (0.000001)
-368. SXII2 (0.000001)
-369. SXXVIIm1 (0.000001)
-370. SXXVI2 (0.000001)
-371. SIIIm2 (0.000001)
-372. SXVII1 (0.000000)
-373. SXVII (0.000000)
-374. SXVIIm1 (0.000000)
-375. SIII (0.000000)
-376. SXIVm1 (0.000000)
-377. SXIVm2 (0.000000)
-378. SIII2 (0.000000)
-379. SXVII2 (0.000000)
-380. SXIV1 (0.000000)
-381. SXIV2 (0.000000)
-382. SXVIIm2 (0.000000)
-383. SXIV (0.000000)
-</pre>
-</div>
 </div>
 
 </div>
