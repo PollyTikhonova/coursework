@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Validation Models</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+ .col-sm-10 {
+    float: none;
+    margin: auto;
+  }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+  
+    <a href="https://pollytikhonova.github.io/coursework/validation/"><img src="https://pollytikhonova.github.io/coursework/GitHub-Mark-32px.png" style="position: absolute; right: 40px; top: 10px;z-index: 10"></a>
+    <a href="https://pollytikhonova.github.io/coursework/validation/minresol_vs_set_val2/Code.html"><img src="coding32.png" style="position: absolute; right: 40px; top: 55px;z-index: 10"></a>
+    <span style="position: absolute; right: 30px;  top: 15px;z-index: 0"> <b>Training without common <br>sequences</b><br>Train score mean = 0.856<br>Train score std = 0.01  <br><b>Common sequences</b><br>Number of sequences/atoms - 0 / 0 <br><b>Minresol</b><br>Number of sequences/atoms - 345 / 242536 <br><b>Set_val2</b><br>Number of sequences/atoms - 3 / 1294</span>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+       <ul class="nav navbar-nav navbar-left my_nav1">
+      <li><a href="#" style='width:300px'>Тренируемся на set_minresol_A7_1000_new, предсказываем на set_val2_A7_new</a></li>
+        <li class="active"><a href="#vtab1" data-toggle="tab">Без общих цепей в валидации</a></li>
+        <li><a href="#vtab2" data-toggle="tab">С общими цепями в валидации</a></li>
+        <li><a href="#vtab3" data-toggle="tab">Результат на трейне</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-left my_nav2">
+       <li><a href="#" style='width:300px'>Тренируемся на set_val2_A7_new, предсказываем на set_minresol_A7_1000_new</a></li>
+        <li><a href="#vtab4" data-toggle="tab">Без общих цепей в валидации</a></li>
+        <li><a href="#vtab5" data-toggle="tab">С общими цепями в валидации</a></li>
+        <li><a href="#vtab6" data-toggle="tab">Результат на трейне</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+<br><br>
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+          <div class="col-sm-10">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="vtab1">
+                    <img src="straight_without_validation_distributions.png" style="width:100%;">
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="vtab2">
+                    <img src="straight_with_validation_distributions.png" style="width:100%;">
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="vtab3">
+                    <img src="straight_train_distributions.png" style="width:100%;">
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="vtab4">
+                    <img src="reverse_without_validation_distributions.png" style="width:100%;">
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="vtab5">
+                    <img src="reverse_with_validation_distributions.png" style="width:100%;">
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="vtab6">
+                    <img src="reverse_train_distributions.png" style="width:100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+  $('.my_nav2').on('click', function(e) {
+     $('.my_nav1 li').removeClass('active');      
+});
+  $('.my_nav1').on('click', function(e) {
+     $('.my_nav2 li').removeClass('active');      
+});
+</script>
+</html>
