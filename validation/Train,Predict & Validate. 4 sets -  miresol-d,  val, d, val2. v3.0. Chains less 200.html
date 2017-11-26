@@ -14113,10 +14113,10 @@ rkJggg==
 
 
 
-<div id="3fbd815b-3b48-47c3-9532-b4c075152adc"></div>
+<div id="7c4a3a9a-5403-44b2-afc6-08056f637348"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#3fbd815b-3b48-47c3-9532-b4c075152adc');
+var element = $('#7c4a3a9a-5403-44b2-afc6-08056f637348');
 var nb = IPython.notebook;
 var kernel = IPython.notebook.kernel;
 var command = "NOTEBOOK_FULL_PATH = '" +nb.notebook_path + "'";
@@ -14148,7 +14148,7 @@ kernel.execute(command);
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">subprocess</span>
@@ -14157,8 +14157,8 @@ kernel.execute(command);
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path_on_git</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_on_git</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">converted</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-    <span class="n">copied</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;copy&quot;</span><span class="p">,</span> <span class="s1">&#39;--to&#39;</span><span class="p">,</span> <span class="n">path_to_here</span><span class="o">+</span><span class="n">notebook_name</span><span class="o">+</span><span class="s1">&#39;.ipynb&#39;</span><span class="p">,</span> <span class="n">path_on_git</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">copied</span> <span class="o">+=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;copy&quot;</span><span class="p">,</span> <span class="s1">&#39;--to&#39;</span><span class="p">,</span> <span class="n">path_to_here</span><span class="o">+</span><span class="n">notebook_name</span><span class="o">+</span><span class="s1">&#39;.html&#39;</span><span class="p">,</span> <span class="n">path_on_git</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">copied</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;copy&quot;</span><span class="p">,</span> <span class="n">path_to_here</span><span class="o">+</span><span class="n">notebook_name</span><span class="o">+</span><span class="s1">&#39;.ipynb&#39;</span><span class="p">,</span> <span class="n">path_on_git</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">copied</span> <span class="o">+=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;copy&quot;</span><span class="p">,</span> <span class="n">path_to_here</span><span class="o">+</span><span class="n">notebook_name</span><span class="o">+</span><span class="s1">&#39;.html&#39;</span><span class="p">,</span> <span class="n">path_on_git</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The file can&#39;t be converted for some reason.&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">copied</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -14169,35 +14169,32 @@ kernel.execute(command);
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">Exception</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-31-24159e9b560b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span>     <span class="ansi-green-intense-fg ansi-bold">raise</span> Exception<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">&#34;The file can&#39;t be converted for some reason.&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span> <span class="ansi-green-intense-fg ansi-bold">if</span> copied <span class="ansi-yellow-intense-fg ansi-bold">!=</span> <span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">---&gt; 12</span><span class="ansi-red-fg">     </span><span class="ansi-green-intense-fg ansi-bold">raise</span> Exception<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">&#34;The file can&#39;t be copied for some reason.&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-red-fg">Exception</span>: The file can&#39;t be copied for some reason.</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span>%%bash
-jupyter-nbconvert --to html path_to_here+notebook_name+<span class="s1">&#39;.ipynb&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">commit_name</span> <span class="o">=</span> <span class="s1">&#39;&quot;validation 4 sets, minresol chains &lt; 200&quot;&#39;</span>
+
+<span class="n">commit_name</span> <span class="o">=</span> <span class="s1">&#39;&quot;add </span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="k">notebook_name</span> if commit_name is None else commit_name
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path_to_git</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s1">&#39;pull&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">git</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">])</span>
+    <span class="n">git</span> <span class="o">+=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;commit&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="n">commit_name</span><span class="p">])</span>
+    <span class="n">git</span> <span class="o">+=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s1">&#39;push&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="s1">&#39;master&#39;</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path_to_here</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Some problems with merging.&quot;</span><span class="p">)</span>
+    
+<span class="k">if</span> <span class="n">git</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path_to_here</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The files can&#39;t be pushed to git.&quot;</span><span class="p">)</span>
+    
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path_to_here</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Files were pushed on git.&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&lt;a target=&quot;_blank&quot; href=&quot;https://github.com/PollyTikhonova/coursework/tree/master/</span><span class="si">%s</span><span class="s1">&quot;&gt; Go to git!&lt;/a&gt;&#39;</span><span class="o">%</span>
+             <span class="n">path_to_here</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;New epoch</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
 </pre></div>
 
 </div>
@@ -14210,9 +14207,17 @@ jupyter-nbconvert --to html path_to_here+notebook_name+<span class="s1">&#39;.ip
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Couldn&#39;t find program: &#39;bash&#39;
+<pre>Files were pushed on git.
 </pre>
 </div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<a href="https://github.com/PollyTikhonova/coursework/tree/master/validation\"> Go to git!</a>
+</div>
+
 </div>
 
 </div>
