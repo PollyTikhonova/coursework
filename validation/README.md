@@ -12,6 +12,6 @@
 		* [Train on minresol VS train on set_val2](https://PollyTikhonova.github.io/coursework/validation/minresol_vs_set_val2)
 		* [Train on minresol VS train on set_val (train with common sequences)](https://PollyTikhonova.github.io/coursework/validation/minresol_vs_setval_train_with_common)
 		* [Sets: minresol-d. val, val2, d. v1.0](https://pollytikhonova.github.io/coursework/validation/Train,Predict&Validate.%204%20sets%20-%20miresol-d,%20val,%20d,%20val2.html)
-		* [Sets: minresol-d. val, val2, d. v2.0](https://pollytikhonova.github.io/coursework/validation/Train%2CPredict%26Validate.%204%20sets%20-%20%20miresol-d%2C%20%20val%2C%20d%2C%20val2.%20v2.0.html)
+		* [Sets: minresol-d. val, val2, d. v2.0](https://pollytikhonova.github.io/coursework/validation/Train,Predict%26Validate.%204%20sets%20-%20%20miresol-d%2C%20%20val%2C%20d%2C%20val2.%20v2.0.html)
 
 
