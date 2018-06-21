@@ -7,7 +7,7 @@
 [Results (3d Vizualizations)](https://PollyTikhonova.github.io/clusterization%20%26%20vizualization/py3dmol.html) <br>
 
 ### Codes
-**[Some results on unbalanced training](https://PollyTikhonova.github.io/coursework/unbalanced_training/) <br>
+<b>[Some results on unbalanced training](https://PollyTikhonova.github.io/coursework/unbalanced_training/)</b> <br>
 #### [Choosing the dataset](https://PollyTikhonova.github.io/coursework/choosing_dataset/)
 #### [Data analysis](https://PollyTikhonova.github.io/coursework/data_analysis/)
  - [NaNs](https://PollyTikhonova.github.io/coursework/data_analysis/Watch%2Bat%2Bnans.html)
