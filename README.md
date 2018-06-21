@@ -8,7 +8,7 @@
 
 ### Codes
 <b>[Some results on unbalanced training](https://PollyTikhonova.github.io/coursework/unbalanced_training/)</b> <br>
-#### [Choosing the dataset](https://PollyTikhonova.github.io/coursework/choosing_dataset/)
+<b>[Choosing the dataset](https://PollyTikhonova.github.io/coursework/choosing_dataset/)</b> <br>
 #### [Data analysis](https://PollyTikhonova.github.io/coursework/data_analysis/)
  - [NaNs](https://PollyTikhonova.github.io/coursework/data_analysis/Watch%2Bat%2Bnans.html)
  - [Correlation research](https://PollyTikhonova.github.io/coursework/data_analysis/correlation/)
