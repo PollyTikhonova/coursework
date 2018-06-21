@@ -12,6 +12,7 @@
 <b>[Data analysis](https://PollyTikhonova.github.io/coursework/data_analysis/)</b> <br>
  - [NaNs](https://PollyTikhonova.github.io/coursework/data_analysis/Watch%2Bat%2Bnans.html)
  - [Correlation research](https://PollyTikhonova.github.io/coursework/data_analysis/correlation/)
+ 
 <b> [Gridsearch on balanced train](https://PollyTikhonova.github.io/coursework/gridsearch/Full%2BGridsearch.html)</b> <br>
 <b> [Validation](https://PollyTikhonova.github.io/coursework/validation/)</b> <br>
 <b> [Clusterization & Vizualization](https://PollyTikhonova.github.io/coursework/clusterization%20%26%20vizualization/)</b> <br>
