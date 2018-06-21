@@ -9,16 +9,16 @@
 ### Codes
 <b>[Some results on unbalanced training](https://PollyTikhonova.github.io/coursework/unbalanced_training/)</b> <br>
 <b>[Choosing the dataset](https://PollyTikhonova.github.io/coursework/choosing_dataset/)</b> <br>
-#### [Data analysis](https://PollyTikhonova.github.io/coursework/data_analysis/)
+<b>[Data analysis](https://PollyTikhonova.github.io/coursework/data_analysis/)</b> <br>
  - [NaNs](https://PollyTikhonova.github.io/coursework/data_analysis/Watch%2Bat%2Bnans.html)
  - [Correlation research](https://PollyTikhonova.github.io/coursework/data_analysis/correlation/)
-#### [Gridsearch on balanced train](https://PollyTikhonova.github.io/coursework/gridsearch/Full%2BGridsearch.html)
-#### [Validation](https://PollyTikhonova.github.io/coursework/validation/)
-#### [Clusterization & Vizualization](https://PollyTikhonova.github.io/coursework/clusterization%20%26%20vizualization/)
+<b> [Gridsearch on balanced train](https://PollyTikhonova.github.io/coursework/gridsearch/Full%2BGridsearch.html)</b> <br>
+<b> [Validation](https://PollyTikhonova.github.io/coursework/validation/)</b> <br>
+<b> [Clusterization & Vizualization](https://PollyTikhonova.github.io/coursework/clusterization%20%26%20vizualization/)</b> <br>
  - [Py3Dmol](https://PollyTikhonova.github.io/coursework/clusterization%20%26%20vizualization/py3dmol.html)
  - [Pymol](https://PollyTikhonova.github.io/coursework/clusterization%20%26%20vizualization/Pymol%2Binteraction.html)
 
-#### [Other](https://PollyTikhonova.github.io/other/)
+<b> [Other](https://PollyTikhonova.github.io/other/)</b> <br>
  - [Compare with other methods](https://github.com/PollyTikhonova/coursework/tree/master/other/other_methods/)
  - [GBM modelling in R](https://github.com/PollyTikhonova/coursework/tree/master/other/GBM/)
  - [FEATURE 2003 (experiments with chains from the article)](https://github.com/PollyTikhonova/coursework/tree/master/other/Feature_2003_experiment)
