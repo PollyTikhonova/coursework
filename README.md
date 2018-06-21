@@ -4,7 +4,7 @@
 ### General
 [Paper](https://PollyTikhonova.github.io/coursework/papers/Diploma_Tikhonova_Polina.pdf) <br>
 [Presentation](https://PollyTikhonova.github.io/coursework/papers/Presentation_Tikhonova_Polina.pdf) <br>
-[Results (3d Vizualizations)](https://PollyTikhonova.github.io/clusterization%20%26%20vizualization/py3dmol.html) <br>
+[Results (3d Vizualizations)](https://PollyTikhonova.github.io/coursework/clusterization%20%26%20vizualization/py3dmol.html) <br>
 
 ### Codes
 <b>[Some results on unbalanced training](https://PollyTikhonova.github.io/coursework/unbalanced_training/)</b> <br>
