@@ -41,10 +41,12 @@ from numpy import linspace
 
 import pickle
 
+from convert_to_roman import *
+
 colour = ['#fc977c', '#929292']
 
 class Magnesium(object):
-    def __init__(self, file_, model = None, fold = "rna-ion-step2/", with_groups = False, colours = ['#fc977c', '#929292'],
+    def __init__(self, file_, model = None, fold = "rna-ion-step2/", with_groups = True, colours = ['#fc977c', '#929292'],
                 choose_n = False, n_features = None, name = ''):
         self.filename = file_.split('.csv')[0]
         if model is not None:
@@ -56,17 +58,42 @@ class Magnesium(object):
         self.n_features = n_features
         self.model_name = str(self.model).split('(')[0]
         self.trained_model = None
-        self.data = pd.read_table(fold+file_).fillna(method = 'backfill', axis = 0)  
+        
+         
+ #       self.data = pd.read_table(fold+file_).fillna(method = 'backfill', axis = 0)  
+  #      self.data = pd.read_table(fold+file_).fillna(value=0)
+        self.data = pd.read_table(fold+file_)
         if ('DSSR' in self.data.columns):
-            self.data.drop('DSSR', axis=1, inplace=True)
-        if np.sum(self.data.isnull().any(axis=1)) > 0:
-            self.data.fillna(method = 'pad', axis = 0, inplace = True)  
+            self.data.drop('DSSR', axis=1, inplace=True)            
+        self.data = self.data.dropna()
+ #       self.data.loc[self.data[150:355]>1]=1
+
+        pairings = list(np.array([[''.join(['S', convert(i), j]) for i in range(1,30)] for j in  ['m2', 'm1', '', '1', '2']]).flatten())
+        letters = ['W','H','S']
+        pairings2 = np.array([[[[[''.join([i,j,k,l])] for i in ['t','c']] 
+                       for k in letters[ind:]] for ind,j in enumerate(letters)] for l in ['m2', 'm1', '', '1', '2']]).flatten()
+        pairings2 = [list(np.array(i).flatten()) for i in pairings2]
+        for i in pairings2:
+            pairings = pairings+i 
+    
+  #      for i in pairings:
+   #         self.data.loc[self.data[i]>1, i]=1       
+
+        self.y = deepcopy(np.array(np.matrix(self.data['mg']).flatten().tolist()[0])) 
+  #      for i in self.data.columns[150:355]:
+   #                 self.data.loc[self.data[i]>1]=0  
+        self.data['mg'] = self.y
+  #      if np.sum(self.data.isnull().any(axis=1)) > 0:
+  #          self.data.fillna(method = 'pad', axis = 0, inplace = True)  
         self.data_numpy = np.matrix(self.data)
-        self.features = list(self.data.columns)[1:]
-        self.groups = self.data_numpy[:,:1]
-        self.x = self.data_numpy[:, 1:-1]
+        self.features = list(self.data.columns)
+        self.features.remove('pdb_chain')
+        self.features.remove('mg')
+        self.groups = [i.split('.cif1')[0] for i in self.data['pdb_chain'].values]        
+        self.x = np.array(self.data[self.features])
+        self.features.append('mg')
         self.xt = None
-        self.y = np.array(self.data_numpy[:,-1].flatten().tolist()[0])   
+     #   self.y = np.array(self.data_numpy[:,-1].flatten().tolist()[0])   
         self.y_pred = []
         self.y_prob = []
         self.y_true = []
@@ -168,7 +195,7 @@ class Magnesium(object):
         else:
             x = x
             y = y
-        gss = StratifiedShuffleSplit(n_splits = n_splits, test_size = 0.3, random_state = 0)
+        gss = GroupShuffleSplit(n_splits = n_splits, test_size = 0.3, random_state = 0)
         rus = RandomUnderSampler(ratio = ratio, random_state=42)
         if self.with_groups:
             splitted = gss.split(x, y, groups = self.groups)
@@ -191,8 +218,8 @@ class Magnesium(object):
             self.trained_model.fit(x_train, y_train)
      #       y_pred = self.trained_model.predict(x_test)
             y_prob = self.trained_model.predict_proba(x_test)[:, 1]
-      #      self.train_score.append(self.trained_model.score(x_train, y_train))
-      #      self.test_score.append(self.trained_model.score(x_test, y_test))
+            self.train_score.append(self.trained_model.score(x_train, y_train))
+            self.test_score.append(self.trained_model.score(x_test, y_test))
       #      self.test_roc_auc_score.append(roc_auc_score(y_test, y_prob))
             
             self.y_prob.append(y_prob)            
@@ -281,8 +308,11 @@ class Magnesium(object):
         x1 = linspace(np.min(y_prob[y == 1]),np.max(y_prob[y == 1]),500)
         x2 = linspace(np.min(y_prob[y == 0]),np.max(y_prob[y == 0]),500)
         
-        treshold = brentq(lambda x : kde1(x) - kde2(x), x2[np.argmax(kde1(x1))], x1[np.argmax(kde2(x2))])
-        
+        try:
+            treshold = brentq(lambda x : kde1(x) - kde2(x), x2[np.argmax(kde1(x1))], x1[np.argmax(kde2(x2))])
+        except ValueError:
+            treshold = 0.5
+            
         probability_density_plot = []
         if plots:
             probability_density_plot.append(self.form_plot_string('plt.fill_between',
@@ -412,3 +442,7 @@ class Magnesium(object):
              out.write(str(grid.best_params_) + '\n' + str(grid.best_score_))                
         self.gridsearched_model = grid.best_estimator_
         return grid.cv_results_
+    
+    
+def plot_one_plot(plot_elements):
+    [eval(plot_string) for plot_string in plot_elements]
