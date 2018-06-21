@@ -9,11 +9,10 @@
 ### Codes
 <b>[Some results on unbalanced training](https://PollyTikhonova.github.io/coursework/unbalanced_training/)</b> <br>
 <b>[Choosing the dataset](https://PollyTikhonova.github.io/coursework/choosing_dataset/)</b> <br>
-<b>[Data analysis](https://PollyTikhonova.github.io/coursework/data_analysis/)</b> <br>
-<ul> 
- <li>[NaNs](https://PollyTikhonova.github.io/coursework/data_analysis/Watch%2Bat%2Bnans.html)</li>
- <li>[Correlation research](https://PollyTikhonova.github.io/coursework/data_analysis/correlation/)</li>
- </ul>
+<b>[Data analysis](https://PollyTikhonova.github.io/coursework/data_analysis/)</b> <br> 
+   - [NaNs](https://PollyTikhonova.github.io/coursework/data_analysis/Watch%2Bat%2Bnans.html)
+   - [Correlation research](https://PollyTikhonova.github.io/coursework/data_analysis/correlation/)
+
  
 <b> [Gridsearch on balanced train](https://PollyTikhonova.github.io/coursework/gridsearch/Full%2BGridsearch.html)</b> <br>
 <b> [Validation](https://PollyTikhonova.github.io/coursework/validation/)</b> <br>
